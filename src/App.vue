@@ -1,13 +1,21 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+  <div id="app" v-loading="isLogin">
     <router-view />
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {};
+  },
+  computed: {
+    isLogin() {
+      return this.$store.getters.getIsLoding;
+    },
+  },
+};
+</script>
+<style  lang="scss" src='@/assets/css/global.scss'></style>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -16,7 +24,10 @@
   text-align: center;
   color: #2c3e50;
 }
-
+body{
+  padding: 0;
+  margin: 0;
+}
 #nav {
   padding: 30px;
 
