@@ -1,0 +1,62 @@
+// 自定义文件上传
+._upload_file {
+    width: 100%;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px dashed #8e7b7b;
+    display: inline-block;
+    line-height: 30px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+    font-weight: 400;
+    color: rgba(126, 126, 126, 0.62);
+    ._icon {
+    }
+    ._upload_file_input {
+      position: absolute;
+      width: 100%;
+      opacity: 0;
+      height: 30px;
+      left: 0;
+      cursor: pointer;
+    }
+    ._relative_span {
+      margin-left: 6px;
+      font-size: 14px;
+      font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+      font-weight: 400;
+      color: rgba(126, 126, 126, 0.62);
+    }
+  }
+
+  .el-form-item__content{
+    text-align: left;
+  }
+
+  // 单行溢出显示省略号
+._one_omit {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  //多行溢出省略号
+  ._more_omit {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+  
+  // 隐藏滚动条但可滚动
+  ._hideScrollbar {
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+      /* WebKit */
+      width: 0;
+      height: 0;
+    }
+  }
