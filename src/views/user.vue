@@ -77,6 +77,7 @@ export default {
       console.log(userinf);
       this.form=userinf[0]?userinf[0]:this.form;
       this.form.photo?this.photo=this.form.photo:'';
+      this.form.dbchain_key=key
     },
     onSubmit() {
       console.log("submit!");

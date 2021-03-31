@@ -46,9 +46,7 @@ export default {
       console.log(data);
       for (let i = 0; i < data.length; i++) {
         const element = data[i];
-        let userInfo = await Querier(this.appCode)
-          .user.equal("dbchain_key", element.created_by)
-          .val();
+        let userInfo = await Querier(this.appCode).user.equal("dbchain_key", element.created_by).val();
           userInfo.reverse();
           console.log(userInfo);
         data[i].userInfo = userInfo[0] ? userInfo[0] : {};

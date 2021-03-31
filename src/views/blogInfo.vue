@@ -8,9 +8,38 @@
       ></div>
     </div>
     <div class="_discuss">
-        <div class="_list">
-            
+      <div class="_list" v-for="(item, index) in discussAll" :key="index">
+        <div class="_flex">
+          <div class="_user">
+            <img
+              :src="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="_userName">{{ item.userInfo.name }}</div>
+          <div class="_text">{{ item.text }}</div>
+          <div class="_btn_relay" @click="replay(item.id)">回复</div>
         </div>
+        <div
+          class="_flex _replay_flex"
+          v-for="(r_item, j) in item.replays"
+          :key="j"
+        >
+          <div class="_user">
+            <img
+              :src="$APIURL.BaseUrl + '/ipfs/' + r_item.userInfo.photo"
+              alt=""
+              srcset=""
+            />
+          </div>
+          <div class="_userName">{{ r_item.userInfo.name }}</div>
+          <div class="_span">回复</div>
+          <div class="_userName">{{ item.userInfo.name }}</div>
+          <div class="_text">{{ r_item.text }}</div>
+          <div class="_btn_relay" @click="replay(item.id)">回复</div>
+        </div>
+      </div>
       <div class="_block_inp">
         <el-input
           type="textarea"
@@ -20,7 +49,7 @@
         >
         </el-input>
         <div class="_btn">
-          <el-button type="primary" @click="submit()">主要按钮</el-button>
+          <el-button type="primary" @click="submit()">评论</el-button>
         </div>
       </div>
     </div>
@@ -36,13 +65,13 @@ export default {
     return {
       blogInfo: "", // 博客详情
       textarea: "", //评论内容
-      discussAll:[]
+      discussAll: [],
     };
   },
   created() {
     that = this;
     this.getBlogInfo();
-    this.getMsg()
+    this.getMsg();
   },
   methods: {
     async getBlogInfo() {
@@ -54,27 +83,44 @@ export default {
       this.blogInfo = data[0];
     },
     async getMsg() {
-      let dataAll = await Querier(this.appCode).discuss.val();
-      console.log(dataAll);
-      this.discussAll=dataAll
-    //   let replayAll = await Querier(this.appCode).replay.val();
-    //   console.log(replayAll);
+      let dataAll = await Querier(this.appCode)
+        .discuss.equal("blog_id", this.blogId)
+        .val();
+      for (let i = 0; i < dataAll.length; i++) {
+        const element = dataAll[i];
+        let thatuser = await Querier(that.appCode)
+          .user.equal("dbchain_key", element.created_by)
+          .val();
+        thatuser.reverse();
+        console.log(thatuser);
+        element.userInfo = thatuser[0] || {};
+      }
+      let msgAll = dataAll.filter((res) => {
+        return res.blog_id && !res.discuss_id;
+      });
+      let replayAll = dataAll.filter((res) => {
+        return res.blog_id && res.discuss_id;
+      });
 
-    //   for (let i = 0; i < dataAll.length; i++) {
-    //     let data = [];
-    //     let msg_id = dataAll[i].id;
-    //     console.log(msg_id);
-    //     for (let j = 0; j < replayAll.length; j++) {
-    //       // data
-    //       if (replayAll[j].message_id == msg_id) {
-    //         console.log("ooo");
-    //         data[data.length] = replayAll[j];
-    //       }
-    //     }
-    //     dataAll[i].replays = data;
-    //   }
-    //   this.msg = dataAll;
-    //   this.loading = false;
+      console.log(msgAll);
+      console.log(replayAll);
+      for (let i = 0; i < msgAll.length; i++) {
+        let data = [];
+        let msg_id = msgAll[i].id;
+        console.log(msg_id);
+        for (let j = 0; j < replayAll.length; j++) {
+          // data
+          if (replayAll[j].discuss_id == msg_id) {
+            console.log("ooo");
+            data[data.length] = replayAll[j];
+          }
+        }
+        msgAll[i].replays = data;
+      }
+      console.log(msgAll);
+      this.discussAll = msgAll;
+      //   this.msg = dataAll;
+      //   this.loading = false;
       // replays
     },
     /**
@@ -98,10 +144,11 @@ export default {
         that.$store.commit("setIsLoding", false);
         that.$message.success(text);
         // that.form={}
-        that.textarea=''
+        that.textarea = "";
         that.getMsg();
       });
     },
+    // 回复
     replay(messageId) {
       //回复留言功能
       this.$prompt("回复留言", "提示", {
@@ -114,8 +161,8 @@ export default {
           let date = new Date();
           console.log(messageId);
           this.insertRow(
-            { message_id: messageId, replay: value },
-            "replay",
+            { discuss_id: messageId, blog_id: that.blogId, text: value },
+            "discuss",
             "回复成功"
           );
         })
@@ -126,7 +173,7 @@ export default {
           });
         });
     },
-
+    // 评论
     submit() {
       let date = new Date();
       if (this.textarea.length == 0) {
@@ -188,6 +235,42 @@ export default {
       width: 85%;
       margin: 0 auto;
     }
+
+    ._list {
+      padding-bottom: 14px;
+
+      ._flex {
+        display: flex;
+        align-items: center;
+        ._user {
+          width: 45px;
+          height: 45px;
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+          }
+        }
+        ._userName {
+          margin-left: 8px;
+          margin-right: 8px;
+          color: coral;
+        }
+        ._text {
+        }
+        ._btn_relay {
+          margin-left: 20px;
+          color: #1989fa;
+          cursor: pointer;
+        }
+      }
+      ._replay_flex {
+        padding-left: 20px;
+      }
+    }
+  }
+  ._btn {
+    padding-top: 30px;
   }
 }
 </style>
