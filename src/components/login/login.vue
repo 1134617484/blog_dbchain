@@ -77,7 +77,7 @@ export default {
     };
   },
   created() {
-    console.log(this);
+    //console.log(this);
     // 每次进入这页面，清除dbchain-js-client缓存
     resetLazyFactory()
     this.$store.commit("setIsLoding", false);
@@ -97,7 +97,7 @@ export default {
         this.$APIURL.BaseUrl,
         this.$APIURL.ChainId
       );
-      console.log(isToBaseUrl);
+      //console.log(isToBaseUrl);
       if (!isToBaseUrl.status) return this.$message.error(isToBaseUrl.content);
       // 设置默认访问参数 节点访问地址和节点id
       setBaseUrl(this.$APIURL.BaseUrl);
@@ -117,18 +117,18 @@ export default {
           this.$store.commit("setIsLoding", true);
           // 此处生成对应私钥
           let iskey =await this.createKey();
-          console.log(iskey);
+          //console.log(iskey);
           if (iskey) return this.$router.push('/blogs');
           return this.$message.error("创建私钥或设置节点信息失败");
         } else {
-          console.log("error submit!!");
+          //console.log("error submit!!");
           return false;
         }
       });
     },
     // async getRouter(address=this.$DBChain.getAddress()) {
     //   this.$store.commit("setIsLoding", true);
-    //   console.log(address)
+    //   //console.log(address)
     //   // 先在学生表中查看
     //   let studentAll =await this.$DBChain
     //     .Querier(this.appCode)
@@ -137,9 +137,9 @@ export default {
     //       ["status", "1"],
     //     ])
     //     .val();
-    //   console.log(studentAll);
+    //   //console.log(studentAll);
     //   studentAll.reverse();
-    //   console.log(studentAll)
+    //   //console.log(studentAll)
     //   if(studentAll.length>0){
     //     this.$store.commit('setUserType','2')
     //     this.$store.commit("setIsLoding", false);
@@ -153,7 +153,7 @@ export default {
     //       ["status", "1"],
     //     ])
     //     .val();
-    //   console.log(teacherAll);
+    //   //console.log(teacherAll);
     //   teacherAll.reverse();
     //   if(teacherAll.length>0){
     //     this.$store.commit('setUserType','1')
@@ -168,7 +168,7 @@ export default {
     //       ["status", "1"],
     //     ])
     //     .val();
-    //   console.log(adminAll);
+    //   //console.log(adminAll);
     //   adminAll.reverse();
     //   if(adminAll.length>0){
     //     this.$store.commit('setUserType','0')
@@ -178,7 +178,7 @@ export default {
     //     }
     // },
     selectLogin(e){
-      console.log(e)
+      //console.log(e)
       this.ruleForm.password=e.password;
       this.ruleForm.mnemonic=e.mnemonic;
       this.data=e.name

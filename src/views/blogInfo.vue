@@ -88,7 +88,7 @@ export default {
           .user.equal("dbchain_key", element.created_by)
           .val();
         thatuser.reverse();
-        console.log(thatuser);
+        //console.log(thatuser);
         element.userInfo = thatuser[0] || {};
       }
       let msgAll = dataAll.filter((res) => {
@@ -98,22 +98,22 @@ export default {
         return res.blog_id && res.discuss_id;
       });
 
-      console.log(msgAll);
-      console.log(replayAll);
+      //console.log(msgAll);
+      //console.log(replayAll);
       for (let i = 0; i < msgAll.length; i++) {
         let data = [];
         let msg_id = msgAll[i].id;
-        console.log(msg_id);
+        //console.log(msg_id);
         for (let j = 0; j < replayAll.length; j++) {
           // data
           if (replayAll[j].discuss_id == msg_id) {
-            console.log("ooo");
+            //console.log("ooo");
             data[data.length] = replayAll[j];
           }
         }
         msgAll[i].replays = data;
       }
-      console.log(msgAll);
+      //console.log(msgAll);
       this.discussAll = msgAll;
       //   this.msg = dataAll;
       //   this.loading = false;
@@ -125,12 +125,12 @@ export default {
      * text 成功后的message
      */
     async insertRow(row, tableName, text) {
-      console.log(row, tableName, text);
-      console.log(that);
+      //console.log(row, tableName, text);
+      //console.log(that);
       that.$store.commit("setIsLoding", true);
-      console.log(that.appCode, tableName, row);
+      //console.log(that.appCode, tableName, row);
       let isCanInsert = await canInsertRow(that.appCode, tableName, row);
-      console.log(isCanInsert);
+      //console.log(isCanInsert);
       if (!isCanInsert) {
         that.$store.commit("setIsLoding", false);
         return that.$message.error("暂时不能插入，请检查原因");
@@ -155,7 +155,7 @@ export default {
       })
         .then(({ value }) => {
           let date = new Date();
-          console.log(messageId);
+          //console.log(messageId);
           this.insertRow(
             { discuss_id: messageId, blog_id: that.blogId, text: value },
             "discuss",
