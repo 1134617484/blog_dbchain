@@ -1,10 +1,8 @@
-const prod_AppCode = "CB8KVGZTXZ",
-  test_AppCode = "7MXXDYVYYA";
-// test_AppCode = "J68LCEZFEA";
+const prod_AppCode = "7PDGQBDQWA",
+  test_AppCode = "7PDGQBDQWA";
 
 const prod_BaseUrl = "https://controlpanel.dbchain.cloud/relay",
-  test_BaseUrl = "http://192.168.0.18/relay";
-// test_BaseUrl = "http://192.168.3.85:3001/relay";
+  test_BaseUrl = "http://controlpanel.dbchain.cloud/relay";
 
 const prod_ChainId = "testnet",
   test_ChainId = "testnet";

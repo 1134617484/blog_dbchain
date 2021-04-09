@@ -1,0 +1,104 @@
+{
+    "appCode": "7MXXDYVYYA",
+    "memo": "基于dbchain-js-client开发的博客开发示例",
+    "table": [
+        {
+            "name": "blogs",
+            "memo": "博客列表",
+            "field": [
+                {
+                    "name": "title",
+                    "memo": "博客标题",
+                    "propertyArr": []
+                },
+                {
+                    "name": "body",
+                    "memo": "博客正文  可支持html",
+                    "propertyArr": []
+                },
+                {
+                    "name": "img",
+                    "memo": "附图",
+                    "propertyArr": []
+                }
+            ],
+            "filter": "",
+            "trigger": "",
+            "options": [
+                "public"
+            ]
+        },
+        {
+            "name": "user",
+            "memo": "用户表",
+            "field": [
+                {
+                    "name": "name",
+                    "memo": "姓名",
+                    "propertyArr": []
+                },
+                {
+                    "name": "age",
+                    "memo": "年龄",
+                    "propertyArr": []
+                },
+                {
+                    "name": "dbchain_key",
+                    "memo": "库链地址",
+                    "propertyArr": []
+                },
+                {
+                    "name": "sex",
+                    "memo": "性别",
+                    "propertyArr": []
+                },
+                {
+                    "name": "status",
+                    "memo": "账号是否可用",
+                    "propertyArr": []
+                },
+                {
+                    "name": "photo",
+                    "memo": "头像",
+                    "propertyArr": []
+                }
+            ],
+            "filter": "",
+            "trigger": "",
+            "options": [
+                "public"
+            ]
+        },
+        {
+            "name": "discuss",
+            "memo": "评论相关表",
+            "field": [
+                {
+                    "name": "blog_id",
+                    "memo": "文章id",
+                    "propertyArr": []
+                },
+                {
+                    "name": "discuss_id",
+                    "memo": "评论id",
+                    "propertyArr": []
+                },
+                {
+                    "name": "text",
+                    "memo": "评论内容",
+                    "propertyArr": []
+                }
+            ],
+            "filter": "",
+            "trigger": "",
+            "options": [
+                "public"
+            ]
+        }
+    ],
+    "type": 1,
+    "permission_required": false,
+    "name": "dbchain-blog",
+    "custom_fns": [],
+    "custom_queriers": []
+}

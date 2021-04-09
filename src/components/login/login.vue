@@ -5,7 +5,6 @@
       <el-card class="box-card">
         <div class="_head">登录</div>
         <el-form
-          :rules="rules"
           ref="ruleForm"
           class="demo-ruleForm"
           :label-position="labelPosition"
@@ -22,19 +21,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-        
-          <!-- <el-form-item
-            class="_items"
-            label="助记词"
-            prop="mnemonic"
-            :rules="rules.mnemonic"
-          >
-            <el-input v-model="ruleForm.mnemonic"></el-input>
-            <span class="_text">助记词之间请用空格隔开</span>
-          </el-form-item>
-          <el-form-item label="密码" prop="password" :rules="rules.password">
-            <el-input v-model="ruleForm.password" type="password"></el-input>
-          </el-form-item> -->
+
           <div style="text-align: center">
             <el-button type="primary" @click="submitForm('ruleForm')"
               >立即登入</el-button
@@ -60,28 +47,11 @@ import {
   setBaseUrl,
   setChainId,
   detectChain,
+  resetLazyFactory
 } from "dbchain-js-client";
 
 export default {
   data() {
-    // let validateMnemonic = (rule, value, callback) => {
-    //   if (value === "") {
-    //     callback(new Error("请输入助记词"));
-    //   } else {
-    //   //  this.$refs.ruleForm.validateField("mnemonic");
-    //     callback();
-    //   }
-    // };
-    let validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.ruleForm.password !== "") {
-          this.$refs.ruleForm.validateField("password");
-        }
-        callback();
-      }
-    };
     return {
       data:'张一',
       labelPosition: "right",
@@ -89,19 +59,9 @@ export default {
         mnemonic: "bind dizzy trigger story senior session finger analyst text traffic scheme parent",
         password: "123456",
       },
-      rules: {
-        mnemonic: [
-          { required: true, message: "请输入助记词", trigger: "blur" },
-        ],
-        password: [
-          { required: true, message: "请输入登入密码", trigger: "blur" },
-          // { validator: validatePass, trigger: "blur" }
-        ],
-      },
+    
       options:[
         {id:'',name:'张一',mnemonic:'bind dizzy trigger story senior session finger analyst text traffic scheme parent',password:'123456',key:''
-        },
-        {id:'',name:'逍遥',mnemonic:'that admit intact embody expect awesome make olive help bring medal anchor',password:'123456',key:''
         },
         {id:'',name:'张二',mnemonic:'citizen nice machine pioneer gossip lyrics tomato spray light food ethics throw',password:'123456',key:''
         },
@@ -118,6 +78,8 @@ export default {
   },
   created() {
     console.log(this);
+    // 每次进入这页面，清除dbchain-js-client缓存
+    resetLazyFactory()
     this.$store.commit("setIsLoding", false);
   },
   methods: {
