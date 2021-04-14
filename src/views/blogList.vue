@@ -57,17 +57,17 @@ export default {
   methods: {
     async getBlogs() {
       let data = await Querier(this.appCode).blogs.val();
-      console.log(data);
+      //console.log(data);
       for (let i = 0; i < data.length; i++) {
         const element = data[i];
         let userInfo = await Querier(this.appCode)
           .user.equal("dbchain_key", element.created_by)
           .val();
         userInfo.reverse();
-        console.log(userInfo);
+        //console.log(userInfo);
         data[i].userInfo = userInfo[0] ? userInfo[0] : {};
       }
-      console.log(data);
+      //console.log(data);
       this.List = data;
     },
   },

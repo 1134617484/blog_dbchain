@@ -71,24 +71,24 @@ export default {
   methods: {
     async getuserInfo() {
       let key = getAddress();
-      console.log(key);
+      //console.log(key);
       let userinf = await Querier(this.appCode).user.equal("dbchain_key", key).val();
       userinf.reverse();
-      console.log(userinf);
+      //console.log(userinf);
       this.form=userinf[0]?userinf[0]:this.form;
       this.form.photo?this.photo=this.form.photo:'';
       this.form.dbchain_key=key
     },
     onSubmit() {
-      console.log("submit!");
+      //console.log("submit!");
       this.exInsertRow(this.form,'user','修改个人信息成功')
     },
     // file类型需上传文件
     uploadFile(e) {
-      console.log(e);
+      //console.log(e);
       let file = e.target.files[0];
       uploadFile(file).then((res) => {
-        console.log(res);
+        //console.log(res);
         that.form.photo=res;
         that.photo=that.form.photo
       });
@@ -99,7 +99,7 @@ export default {
      * text 成功后的message
      */
     async exInsertRow(row, tableName, text) {
-      console.log(row, tableName, text);
+      //console.log(row, tableName, text);
       that.$store.commit("setIsLoding", true);
     //   尝试插入 如果成功则说明可正确插入数据
       let isCanInsert = await canInsertRow(
@@ -107,7 +107,7 @@ export default {
         tableName,
         row
       );
-      console.log(isCanInsert);
+      //console.log(isCanInsert);
       if (!isCanInsert) {
         that.$store.commit("setIsLoding", false);
         return that.$message.error("暂时不能插入，请检查原因");

@@ -51,7 +51,6 @@ export default {
      * text 成功后的message
      */
     async exInsertRow(row, tableName, text) {
-      console.log(row, tableName, text);
       that.$store.commit("setIsLoding", true);
     //   尝试插入 如果成功则说明可正确插入数据
       let isCanInsert = await canInsertRow(
@@ -59,7 +58,6 @@ export default {
         tableName,
         row
       );
-      console.log(isCanInsert);
       if (!isCanInsert) {
         that.$store.commit("setIsLoding", false);
         return that.$message.error("暂时不能插入，请检查原因");
