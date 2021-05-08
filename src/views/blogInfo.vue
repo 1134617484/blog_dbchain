@@ -214,6 +214,12 @@ export default {
       font-size: 15px;
       color: #121212;
       text-align: left;
+      font-size: 16px;
+font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+font-weight: 400;
+color: #000000;
+line-height: 32px;
+letter-spacing: 1px;
     }
     ._tit {
       line-height: 32px;
@@ -223,6 +229,12 @@ export default {
       font-size: 22px;
       font-weight: 600;
       margin-bottom: 30px;
+      font-size: 38px;
+font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+font-weight: 500;
+color: #000000;
+line-height: 57px;
+letter-spacing: 1px;
     }
     margin-bottom: 60px;
   }

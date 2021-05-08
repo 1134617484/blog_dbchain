@@ -1,12 +1,19 @@
 <template>
   <div id="app" v-loading="isLogin">
+    <div class="_header">
+      <blog_header />
+    </div>
     <router-view />
   </div>
 </template>
 <script>
+import header from "@/components/header.vue";
 export default {
   data() {
     return {};
+  },
+  components: {
+    blog_header: header,
   },
   computed: {
     isLogin() {
@@ -23,8 +30,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background: #f8f8f8;
 }
-body{
+body {
   padding: 0;
   margin: 0;
 }

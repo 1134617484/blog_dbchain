@@ -2,16 +2,34 @@
 <!-- 内置登录页 -->
   <div class="_login">
     <div class="_content">
-      <el-card class="box-card">
+      <div class="_box_card">
+        <div class="_header">
+          <img src="@/assets/img/user.png" alt="" srcset="">
+        </div>
+        <div class="_cont">
+            <el-select v-model="data" placeholder="请选择账号" @change='selectLogin'>
+              <el-option
+                v-for="item in options"
+                :key="item.mnemonic"
+                :label="item.name"
+                :value="item">
+              </el-option>
+            </el-select>
+        </div>
+        <div class="_btn"  @click="submitForm('ruleForm')">立即进入</div>
+      </div>
+   
+
+      <!-- <el-card class="box-card">
         <div class="_head">登录</div>
         <el-form
           ref="ruleForm"
           class="demo-ruleForm"
           :label-position="labelPosition"
-          label-width="80px"
+          label-width="120px"
           :model="ruleForm"
         >
-        <el-form-item prop="mnemonic">
+        <el-form-item prop="mnemonic" class="_cont">
           <el-select v-model="data" placeholder="请选择账号" @change='selectLogin'>
               <el-option
                 v-for="item in options"
@@ -30,7 +48,14 @@
         </el-form>
 
         <div>当前助记词：{{ruleForm.mnemonic}}</div>
-      </el-card>
+      </el-card> -->
+    </div>
+
+     <div class="_footer">
+      <div class="_tit">
+        当前助记词
+      </div>
+      <div class="_txt">{{ruleForm.mnemonic}}</div>
     </div>
   </div>
 </template>
@@ -59,7 +84,6 @@ export default {
         mnemonic: "bind dizzy trigger story senior session finger analyst text traffic scheme parent",
         password: "123456",
       },
-    
       options:[
         {id:'',name:'张一',mnemonic:'bind dizzy trigger story senior session finger analyst text traffic scheme parent',password:'123456',key:''
         },
@@ -107,9 +131,7 @@ export default {
       return true;
     },
     // 点击登入
-    submitForm(formName) {
-      this.$refs[formName].validate(async (valid) => {
-        if (valid) {
+    async submitForm(formName) {
           let ismnemonic = await validateMnemonic(this.ruleForm.mnemonic);
           if (!ismnemonic) {
             return this.$message.error("助记词有误，请检查");
@@ -120,63 +142,9 @@ export default {
           //console.log(iskey);
           if (iskey) return this.$router.push('/blogs');
           return this.$message.error("创建私钥或设置节点信息失败");
-        } else {
-          //console.log("error submit!!");
-          return false;
-        }
-      });
+       
     },
-    // async getRouter(address=this.$DBChain.getAddress()) {
-    //   this.$store.commit("setIsLoding", true);
-    //   //console.log(address)
-    //   // 先在学生表中查看
-    //   let studentAll =await this.$DBChain
-    //     .Querier(this.appCode)
-    //     .student.compareAll([
-    //       ["address", address],
-    //       ["status", "1"],
-    //     ])
-    //     .val();
-    //   //console.log(studentAll);
-    //   studentAll.reverse();
-    //   //console.log(studentAll)
-    //   if(studentAll.length>0){
-    //     this.$store.commit('setUserType','2')
-    //     this.$store.commit("setIsLoding", false);
-    //     this.$store.commit('changeUserInfo',studentAll[0])
-    //     return this.$router.push('/student')
-    //     }
-    //   let teacherAll =await this.$DBChain
-    //     .Querier(this.appCode)
-    //     .teacher.compareAll([
-    //       ["address", address],
-    //       ["status", "1"],
-    //     ])
-    //     .val();
-    //   //console.log(teacherAll);
-    //   teacherAll.reverse();
-    //   if(teacherAll.length>0){
-    //     this.$store.commit('setUserType','1')
-    //     this.$store.commit("setIsLoding", false);
-    //     this.$store.commit('changeUserInfo',teacherAll[0])
-    //     return this.$router.push('/index')
-    //     }
-    //   let adminAll =await this.$DBChain
-    //     .Querier(this.appCode)
-    //     .admin.compareAll([
-    //       ["address", address],
-    //       ["status", "1"],
-    //     ])
-    //     .val();
-    //   //console.log(adminAll);
-    //   adminAll.reverse();
-    //   if(adminAll.length>0){
-    //     this.$store.commit('setUserType','0')
-    //     this.$store.commit("setIsLoding", false);
-    //     this.$store.commit('changeUserInfo',adminAll[0])
-    //     return this.$router.push('/index')
-    //     }
-    // },
+ 
     selectLogin(e){
       //console.log(e)
       this.ruleForm.password=e.password;
@@ -195,12 +163,15 @@ export default {
 <style lang="scss" scoped>
 ._login {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 72px);
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
   ._content {
-    width: 500px;
+   width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;    padding-top: 90px;
     ._head {
       padding-bottom: 20px;
       font-size: 18px;
@@ -215,6 +186,66 @@ export default {
         color: #888;
       }
     }
+    ._box_card{
+      width: 200px;
+height: 275px;
+background: #FFFFFF;
+border-radius: 15px;
+padding: 40px 50px;
+._header{
+  display: flex;
+  justify-content: center;
+  img{
+    width: 108px;
+height: 108px;
+background: #D8D8D8;
+box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.21);
+border-radius: 50%;
+  }
+  // margin-bottom: ;
+}
+._cont{
+  padding: 28.5px 0;
+}
+._btn{
+  width: 200px;
+height: 64px;
+background: #2E44FF;
+box-shadow: 0px 2px 24px 0px rgba(46, 68, 255, 0.43);
+border-radius: 20px;
+
+font-size: 24px;
+font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+font-weight: 400;
+color: #FFFFFF;
+line-height: 64px;
+
+cursor: pointer;
+}
+    }
+  }
+  ._footer{
+    width: 522px;
+height: 132px;
+background: #EFEFEF;
+border-radius: 11px;
+._tit{
+  font-size: 20px;
+font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+font-weight: 500;
+color: #444444;
+line-height: 30px;
+    padding: 17px 0 14px 0;
+}
+._txt{
+  font-size: 18px;
+font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+font-weight: 400;
+color: #9E9E9E;
+line-height: 26px;
+text-align: left;
+padding: 0 22px;
+}
   }
 }
 </style>

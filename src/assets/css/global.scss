@@ -60,3 +60,35 @@
       height: 0;
     }
   }
+
+
+.add_blog_dialog{
+  background: #FFFFFF;
+  border-radius: 15px !important;
+  height: 764px;
+  .el-dialog__body{
+    padding: 30px 40px;
+  }
+  ._tit{
+
+    .el-textarea__inner{
+height: 52px;
+    }
+  }
+  .el-dialog__header{
+    padding: 0;
+  }
+  .el-textarea__inner{
+    background: #EFEFEF;
+    border-radius: 11px;
+    font-size: 20px;
+    font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+    font-weight: 500;
+    color: #444444;
+    line-height: 30px;
+  }
+  
+}
+.el-loading-mask{
+  z-index: 2001;
+}

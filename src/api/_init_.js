@@ -2,7 +2,7 @@ const prod_AppCode = "7PDGQBDQWA",
   test_AppCode = "7PDGQBDQWA";
 
 const prod_BaseUrl = "https://controlpanel.dbchain.cloud/relay",
-  test_BaseUrl = "http://controlpanel.dbchain.cloud/relay";
+  test_BaseUrl = "https://controlpanel.dbchain.cloud/relay";
 
 const prod_ChainId = "testnet",
   test_ChainId = "testnet";
