@@ -92,3 +92,35 @@ height: 52px;
 .el-loading-mask{
   z-index: 2001;
 }
+
+._blogInfo ._discuss ._block_inp 
+{
+  .el-input__inner{
+    height: 64px;
+      background: #EFEFEF;
+      border-radius: 14px;
+  }
+  ._btn{
+    .el-button{
+      width: inherit;
+      height: inherit;
+      font-size: 20px;    border-radius: 8px;
+font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+font-weight: 500;
+color: #FFFFFF;
+    }
+  }
+  
+}
+
+._card{
+  .el-input,.el-input__inner{
+    width: inherit;
+    height: inherit;
+    background: inherit;
+   
+  }
+  .el-input__inner{
+    background: #efefef;border-radius: 11px;
+  }
+}

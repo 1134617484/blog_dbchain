@@ -140,7 +140,10 @@ export default {
           // 此处生成对应私钥
           let iskey =await this.createKey();
           //console.log(iskey);
-          if (iskey) return this.$router.push('/blogs');
+          if (iskey){
+            this.$store.commit('setIsUser',new Date().getTime())
+return this.$router.push('/blogs');
+          } 
           return this.$message.error("创建私钥或设置节点信息失败");
        
     },

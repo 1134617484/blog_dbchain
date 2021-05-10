@@ -8,6 +8,10 @@
       ></div>
     </div>
     <div class="_discuss">
+      <div class="_header">
+        <div class="_tit">热门评论</div>
+        <div class="_desc">Top Comments</div>
+      </div>
       <div class="_list" v-for="(item, index) in discussAll" :key="index">
         <div class="_flex">
           <div class="_user">
@@ -42,9 +46,7 @@
       </div>
       <div class="_block_inp">
         <el-input
-          type="textarea"
-          :rows="2"
-          placeholder="请输入内容"
+          placeholder="留下你的观点吧！"
           v-model="textarea"
         >
         </el-input>
@@ -202,8 +204,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
 ._blogInfo {
-  width: 1200px;
+  width: 1360px;
   margin: 0 auto;
   ._cont {
     ._body {
@@ -239,13 +242,46 @@ letter-spacing: 1px;
     margin-bottom: 60px;
   }
   ._discuss {
+    ._header{
+      text-align: left;
+      padding-bottom: 39px;
+      ._tit{
+font-size: 32px;
+font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+font-weight: bold;
+color: #444444;
+line-height: 48px;
+      }
+      ._desc{
+        font-size: 18px;
+font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+font-weight: bold;
+color: #444444;
+line-height: 27px;
+      }
+    }
     ._block_inp {
-      width: 85%;
+      width: 100%;
       margin: 0 auto;
+      position: relative;
+      padding-bottom: 28px;
+      ._btn{
+        position: absolute;
+        right: 5px;
+    top: 6px;
+    width: 105px;
+height: 52px;
+background: #2E44FF;
+border-radius: 8px;
+      }
     }
 
     ._list {
-      padding-bottom: 14px;
+     background: #FFFFFF;
+    box-shadow: 0px 10px 9px 0px rgb(230 230 230 / 26%);
+    border-radius: 15px;
+    margin-bottom: 14px;
+    padding: 12px 16px 18px 20px;
 
       ._flex {
         display: flex;
@@ -274,11 +310,10 @@ letter-spacing: 1px;
       }
       ._replay_flex {
         padding-left: 20px;
+        margin-top: 20px;
       }
     }
   }
-  ._btn {
-    padding-top: 30px;
-  }
+
 }
 </style>

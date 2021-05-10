@@ -60,37 +60,48 @@
       </div>
     </div>
 
-    <div class="_addbtn" @click="isAddBlog=true">写博客</div>
+    <div class="_addbtn" @click="isAddBlog = true">写博客</div>
 
-    <el-dialog :visible.sync="isAddBlog" :destroy-on-close="true"
-    :show-close='false' width="1320px" custom-class='add_blog_dialog' top="calc((100vh - 764px) / 2)">
+    <el-dialog
+      :visible.sync="isAddBlog"
+      :destroy-on-close="true"
+      :show-close="false"
+      width="1320px"
+      custom-class="add_blog_dialog"
+      top="calc((100vh - 764px) / 2)"
+    >
       <template>
-        <addBlog @closeBlog='closeBlog()' @getBlogs="getBlogs()"/>
+        <addBlog @closeBlog="closeBlog()" @getBlogs="getBlogs()" />
       </template>
-</el-dialog>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import { Querier } from "dbchain-js-client";
-import addBlog from "./addblog.vue"
+import { Querier, hasKey, hasPassphrase } from "dbchain-js-client";
+import addBlog from "./addblog.vue";
 let that;
 export default {
   name: "Home",
   data() {
     return {
       List: [],
-      isAddBlog:false
+      isAddBlog: false,
     };
   },
   created() {
     that = this;
-    console.log(that)
+    console.log(that);
     this.getBlogs();
   },
   methods: {
     async getBlogs() {
+      // 无秘钥或无密码认为未登录
+      if (!hasKey() || !hasPassphrase()) {
+        this.$message.warning("登录失效，请重新登录");
+        return this.$router.push("/login");
+      }
       let data = await Querier(this.appCode).blogs.val();
       //console.log(data);
       for (let i = 0; i < data.length; i++) {
@@ -106,13 +117,13 @@ export default {
       //console.log(data);
       this.List = data;
     },
-    closeBlog(val){
-      this.isAddBlog=false
-    }
+    closeBlog(val) {
+      this.isAddBlog = false;
+    },
   },
 
   components: {
-    addBlog
+    addBlog,
   },
   computed: {
     appCode() {
@@ -170,23 +181,28 @@ export default {
       border-radius: 11px;
       ._inp {
         width: 100%;
-        input{
-              border: none;
-    background: initial;padding-left: 15px;
-    padding-right: 15px;
-    width: calc(100% - 30px);
-    height: 100%;
-    font-size: 22px;
-    font-family: PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei, Verdana, Roboto, Noto, Helvetica Neue, sans-serif !important;
-    &:active,&:focus-visible,&:focus{
-      border: none; outline: none;
-    }
+        input {
+          border: none;
+          background: initial;
+          padding-left: 15px;
+          padding-right: 15px;
+          width: calc(100% - 30px);
+          height: 100%;
+          font-size: 22px;
+          font-family: PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei,
+            Verdana, Roboto, Noto, Helvetica Neue, sans-serif !important;
+          &:active,
+          &:focus-visible,
+          &:focus {
+            border: none;
+            outline: none;
+          }
         }
       }
       ._icon {
         position: absolute;
-      right: 9px;
-    top: 7px;
+        right: 9px;
+        top: 7px;
         img {
           width: 34px;
           height: 34px;
