@@ -69,6 +69,8 @@
       width="1320px"
       custom-class="add_blog_dialog"
       top="calc((100vh - 764px) / 2)"
+      :close-on-click-modal='false'
+
     >
       <template>
         <addBlog @closeBlog="closeBlog()" @getBlogs="getBlogs()" />
@@ -119,6 +121,7 @@ export default {
     },
     closeBlog(val) {
       this.isAddBlog = false;
+      that.getBlogs()
     },
   },
 
@@ -135,7 +138,7 @@ export default {
 <style scoped lang='scss'>
 ._blog_list {
   width: 1360px;
-  margin: 0 auto;
+  margin: 0 auto;min-height: 92vh;
   ._header {
     // padding-top: 25px;
     display: flex;
@@ -213,7 +216,6 @@ export default {
   ._content {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     ._block {
       text-align: left;
       border-bottom: 1px solid #f4f4f4;
@@ -226,7 +228,10 @@ export default {
       background: #ffffff;
       box-shadow: 0px 10px 9px 0px rgba(230, 230, 230, 0.26);
       border-radius: 16px;
-      margin-bottom: 22px;
+      margin-bottom: 22px;margin-right: 32px;
+      &:nth-child(3n+3){
+        margin-right: 0px;
+      }
       ._tit {
         font-size: 22px;
         font-family: PingFang SC, Hiragino Sans GB, Arial, Microsoft YaHei,

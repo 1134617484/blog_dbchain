@@ -79,7 +79,6 @@ export default {
             that.$store.commit("setIsLoding", false);
             that.$message.success(text);
             that.closeBlog()
-            that.getBlogs()
       });
     },
 

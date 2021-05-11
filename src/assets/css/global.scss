@@ -61,6 +61,10 @@
     }
   }
 
+  .el-loading-mask{
+    width: 100vw;
+    height: 100vh;    z-index: 2013 !important;
+  }
 
 .add_blog_dialog{
   background: #FFFFFF;

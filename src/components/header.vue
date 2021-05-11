@@ -1,11 +1,11 @@
 <template>
   <div class="_header">
-    <div class="_left">
+    <div class="_left _local" @click="$router.push('/blogs')">
       <img src="@/assets/img/logo.png" alt="" srcset="" />
     </div>
-    <div class="_right">
+    <div class="_right"  v-if="!islogin">
       <span class="_name" @click="openCard()">{{ name }}</span>
-      <div class="_img" @click="openCard()">
+      <div class="_img" @click="openCard()"> 
         <img :src="getUserImg()" alt="" srcset="" />
       </div>
 
@@ -58,7 +58,7 @@
           <el-input v-model="name"></el-input>
         </div>
         <div class="_card_save" @click="onSubmit()">保存</div>
-        <div class="_card_outlogin">
+        <div class="_card_outlogin" @click.stop="outLogin()">
           <span class="_card_txt">NEXT</span>
           <span class="_card_img">
             <img src="@/assets/img/user_outlogin.png" alt="" srcset="" />
@@ -87,6 +87,7 @@ export default {
       photo: "",
       sex: "",
       showUserCard: false,
+      islogin:false
     };
   },
   created() {
@@ -131,6 +132,7 @@ export default {
           age: this.age+'',
           photo: this.photo+'',
           sex: this.sex+'',
+          dbchain_key: getAddress()
         },
         "user",
         "修改个人信息成功"
@@ -169,9 +171,14 @@ export default {
       insertRow(that.appCode, tableName, row, async () => {
         that.$store.commit("setIsLoding", false);
         that.$message.success(text);
-        that.$router.push("/blogs");
+        that.getUserInfo();
       });
     },
+
+    outLogin(){
+      this.closeCard()
+      this.$router.push('/login')
+    }
   },
   computed: {
     isUser() {
@@ -185,6 +192,14 @@ export default {
     isUser(val) {
       console.log(val);
       this.getUserInfo();
+    },
+    $route(val) {
+      console.log(val)
+      if(val.path=='/login'){
+        this.islogin=true
+      }else{
+        this.islogin=false
+      }
     },
   },
 };
@@ -201,6 +216,7 @@ export default {
   ._left {
     img {
       height: 48px;
+      cursor: pointer;
     }
   }
   ._right {
@@ -229,7 +245,7 @@ export default {
       height: 358px;
       background: #ffffff;
       border-radius: 15px;
-      z-index: 2010;
+      z-index: 2015;
       padding: 19px 25px 30px 20px;
       ._card_header {
         display: flex;

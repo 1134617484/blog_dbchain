@@ -21,8 +21,11 @@
               srcset=""
             />
           </div>
-          <div class="_userName">{{ item.userInfo.name }}</div>
-          <div class="_text">{{ item.text }}</div>
+          <div class="_content">
+            <div class="_userName">{{ item.userInfo.name }}</div>
+            <div class="_text">{{ item.text }}</div>
+          </div>
+
           <div class="_btn_relay" @click="replay(item.id)">回复</div>
         </div>
         <div
@@ -37,19 +40,18 @@
               srcset=""
             />
           </div>
-          <div class="_userName">{{ r_item.userInfo.name }}</div>
-          <div class="_span">回复</div>
-          <div class="_userName">{{ item.userInfo.name }}</div>
-          <div class="_text">{{ r_item.text }}</div>
+          <div class="_content _relays">
+            <span class="_userName">{{ r_item.userInfo.name }}</span>
+            <span class="_span">回复</span>
+            <span class="_userName">{{ item.userInfo.name }}</span>
+            <div class="_text">{{ r_item.text }}</div>
+          </div>
+
           <div class="_btn_relay" @click="replay(item.id)">回复</div>
         </div>
       </div>
       <div class="_block_inp">
-        <el-input
-          placeholder="留下你的观点吧！"
-          v-model="textarea"
-        >
-        </el-input>
+        <el-input placeholder="留下你的观点吧！" v-model="textarea"> </el-input>
         <div class="_btn">
           <el-button type="primary" @click="submit()">评论</el-button>
         </div>
@@ -78,12 +80,16 @@ export default {
   methods: {
     async getBlogInfo() {
       // 按条件查询
-      let data = await Querier(this.appCode).blogs.equal("id", this.blogId).val();
+      let data = await Querier(this.appCode)
+        .blogs.equal("id", this.blogId)
+        .val();
       if (!data[0]) return this.$message.error("此id无数据");
       this.blogInfo = data[0];
     },
     async getMsg() {
-      let dataAll = await Querier(this.appCode).discuss.equal("blog_id", this.blogId).val();
+      let dataAll = await Querier(this.appCode)
+        .discuss.equal("blog_id", this.blogId)
+        .val();
       for (let i = 0; i < dataAll.length; i++) {
         const element = dataAll[i];
         let thatuser = await Querier(that.appCode)
@@ -204,9 +210,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
 ._blogInfo {
   width: 1360px;
+  min-width: 1360px;
   margin: 0 auto;
   ._cont {
     ._body {
@@ -218,11 +224,11 @@ export default {
       color: #121212;
       text-align: left;
       font-size: 16px;
-font-family: SourceHanSansCN-Regular, SourceHanSansCN;
-font-weight: 400;
-color: #000000;
-line-height: 32px;
-letter-spacing: 1px;
+      font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+      font-weight: 400;
+      color: #000000;
+      line-height: 32px;
+      letter-spacing: 1px;
     }
     ._tit {
       line-height: 32px;
@@ -233,31 +239,31 @@ letter-spacing: 1px;
       font-weight: 600;
       margin-bottom: 30px;
       font-size: 38px;
-font-family: SourceHanSansCN-Medium, SourceHanSansCN;
-font-weight: 500;
-color: #000000;
-line-height: 57px;
-letter-spacing: 1px;
+      font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+      font-weight: 500;
+      color: #000000;
+      line-height: 57px;
+      letter-spacing: 1px;
     }
     margin-bottom: 60px;
   }
   ._discuss {
-    ._header{
+    ._header {
       text-align: left;
       padding-bottom: 39px;
-      ._tit{
-font-size: 32px;
-font-family: SourceHanSansCN-Bold, SourceHanSansCN;
-font-weight: bold;
-color: #444444;
-line-height: 48px;
+      ._tit {
+        font-size: 32px;
+        font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+        font-weight: bold;
+        color: #444444;
+        line-height: 48px;
       }
-      ._desc{
+      ._desc {
         font-size: 18px;
-font-family: SourceHanSansCN-Bold, SourceHanSansCN;
-font-weight: bold;
-color: #444444;
-line-height: 27px;
+        font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+        font-weight: bold;
+        color: #444444;
+        line-height: 27px;
       }
     }
     ._block_inp {
@@ -265,23 +271,23 @@ line-height: 27px;
       margin: 0 auto;
       position: relative;
       padding-bottom: 28px;
-      ._btn{
+      ._btn {
         position: absolute;
         right: 5px;
-    top: 6px;
-    width: 105px;
-height: 52px;
-background: #2E44FF;
-border-radius: 8px;
+        top: 6px;
+        width: 105px;
+        height: 52px;
+        background: #2e44ff;
+        border-radius: 8px;
       }
     }
 
     ._list {
-     background: #FFFFFF;
-    box-shadow: 0px 10px 9px 0px rgb(230 230 230 / 26%);
-    border-radius: 15px;
-    margin-bottom: 14px;
-    padding: 12px 16px 18px 20px;
+      background: #ffffff;
+      box-shadow: 0px 10px 9px 0px rgb(230 230 230 / 26%);
+      border-radius: 15px;
+      margin-bottom: 14px;
+      padding: 12px 16px 18px 20px;
 
       ._flex {
         display: flex;
@@ -295,17 +301,50 @@ border-radius: 8px;
             border-radius: 50%;
           }
         }
-        ._userName {
-          margin-left: 8px;
-          margin-right: 8px;
-          color: coral;
+        ._content {
+          text-align: left;
+          padding-left: 18px;
+          padding-top: 10px;
+          width: calc(100% - 128px);
+          ._userName {
+            font-size: 18px;
+            font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+            font-weight: bold;
+            color: #444444;
+            line-height: 25px;
+            margin-bottom: 10px;
+          }
+          ._text {
+            font-size: 16px;
+            font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+            font-weight: 400;
+            color: #444444;
+            line-height: 24px;
+          }
         }
-        ._text {
+        ._relays {
+          font-size: 16px;
+          font-family: SourceHanSansCN-Medium, SourceHanSansCN;
+          font-weight: 500;
+          color: #444444;
+          line-height: 18px;
+          span {
+            font-size: inherit;
+          }
+          ._span {
+            margin: 0 6px;
+          }
         }
         ._btn_relay {
-          margin-left: 20px;
-          color: #1989fa;
+          // margin-left: 20px;
+          // color: #1989fa;
           cursor: pointer;
+          font-size: 14px;
+          font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+          font-weight: 400;
+          color: #9e9e9e;
+          line-height: 21px;
+          padding-left: 22px;
         }
       }
       ._replay_flex {
@@ -314,6 +353,5 @@ border-radius: 8px;
       }
     }
   }
-
 }
 </style>
