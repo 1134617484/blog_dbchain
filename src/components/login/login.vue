@@ -171,11 +171,13 @@ export default {
     },
     // 点击登入
     async submitForm(formName) {
+      this.$store.commit("setIsLoding", true);
       let ismnemonic = await validateMnemonic(this.ruleForm.mnemonic);
       if (!ismnemonic) {
+        this.$store.commit("setIsLoding", false);
         return this.$message.error("助记词有误，请检查");
       }
-      this.$store.commit("setIsLoding", true);
+      
       // 此处生成对应私钥
       let iskey = await this.createKey();
       //console.log(iskey);

@@ -44,6 +44,7 @@
           <div class="_user">
             <div class="_photo" v-if="item.userInfo">
               <img
+                v-real-img="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo" :default-img="$img.default_img"
                 :src="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo"
                 alt=""
               />

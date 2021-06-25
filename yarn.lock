@@ -3095,10 +3095,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-dbchain-js-client@1.3.15:
-  version "1.3.15"
-  resolved "https://registry.yarnpkg.com/dbchain-js-client/-/dbchain-js-client-1.3.15.tgz#d6446b4be211f0dc3af3e900067362478f0de8e1"
-  integrity sha512-mY5yyEfBNnb9GDOXT/4WQ9NO8WjEGo4CI84jxu6I4M5c/F7cdi1jhCiK9UTXWRcMLRQfLnqvz7coZ3Vrt3jT7w==
+dbchain-js-client@^1.3.17:
+  version "1.3.17"
+  resolved "https://registry.yarnpkg.com/dbchain-js-client/-/dbchain-js-client-1.3.17.tgz#6bb45d1dbce0475218964fe52f414be54d38e987"
+  integrity sha512-TiSc2VfiADY7G9UNFnR7qHlsF7oAsYMYLPGme7LAfUwGkLVnBQIgblM1x7nByNzmsBGrk6SCQ5sebWuCLaB94w==
   dependencies:
     "@tendermint/belt" "^0.2.1"
     axios "^0.21.1"

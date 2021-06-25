@@ -16,6 +16,7 @@
         <div class="_flex">
           <div class="_user">
             <img
+            v-real-img="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo" :default-img="$img.default_img"
               :src="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo"
               alt=""
               srcset=""
@@ -35,6 +36,7 @@
         >
           <div class="_user">
             <img
+            v-real-img="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo" :default-img="$img.default_img"
               :src="$APIURL.BaseUrl + '/ipfs/' + r_item.userInfo.photo"
               alt=""
               srcset=""

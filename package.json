@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "dbchain-js-client": "1.3.15",
+    "dbchain-js-client": "^1.3.17",
     "element-ui": "^2.15.1",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
