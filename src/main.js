@@ -14,7 +14,10 @@ import { img_Base } from "@/assets/base/base64.js";
 console.log(img_Base);
 Vue.prototype.$img = img_Base;
 
-
+//异常处理
+Vue.config.errorHandler = function (err, vm, info) {
+  console.log(`Error: ${err.toString()}\nInfo: ${info}`);
+};
 //全局注册自定义指令，用于判断当前图片是否能够加载成功，可以加载成功则赋值为img的src属性，否则使用默认图片
 Vue.directive("real-img", async function (el, binding) {
   let imgURL = binding.value; //获取图片地址
@@ -50,6 +53,19 @@ let imageIsExist = function (url) {
     img.src = url;
   });
 };
+// 加载更多
+Vue.directive('loadmore', {
+  bind(el, binding) {
+    // const selectWrap = el.querySelector('.el-table__body-wrapper')
+    el.addEventListener('scroll', function() {
+      let sign = 0
+      const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
+      if (scrollDistance <= sign) {
+        binding.value()
+      }
+    })
+  }
+})
 new Vue({
   router,
   store,

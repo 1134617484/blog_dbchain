@@ -82,20 +82,19 @@ export default {
   methods: {
     async getBlogInfo() {
       // 按条件查询
-      let data = await Querier(this.appCode)
-        .blogs.equal("id", this.blogId)
+      let data = await Querier(this.appCode).table('blogs').equal("id", this.blogId)
         .val();
       if (!data[0]) return this.$message.error("此id无数据");
       this.blogInfo = data[0];
     },
     async getMsg() {
-      let dataAll = await Querier(this.appCode)
-        .discuss.equal("blog_id", this.blogId)
+      let dataAll = await Querier(this.appCode).table('discuss')
+        .equal("blog_id", this.blogId)
         .val();
       for (let i = 0; i < dataAll.length; i++) {
         const element = dataAll[i];
         let thatuser = await Querier(that.appCode)
-          .user.equal("dbchain_key", element.created_by)
+          .table('user').equal("dbchain_key", element.created_by)
           .val();
         thatuser.reverse();
         //console.log(thatuser);

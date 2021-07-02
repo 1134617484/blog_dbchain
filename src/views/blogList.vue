@@ -31,7 +31,7 @@
         </span>
       </div>
     </div>
-    <div class="_content">
+    <div class="_content _hideScrollbar" v-loadmore="getData">
       <div
         class="_block"
         v-for="(item, index) in List"
@@ -44,7 +44,8 @@
           <div class="_user">
             <div class="_photo" v-if="item.userInfo">
               <img
-                v-real-img="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo" :default-img="$img.default_img"
+                v-real-img="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo"
+                :default-img="$img.default_img"
                 :src="$APIURL.BaseUrl + '/ipfs/' + item.userInfo.photo"
                 alt=""
               />
@@ -70,8 +71,7 @@
       width="1320px"
       custom-class="add_blog_dialog"
       top="calc((100vh - 764px) / 2)"
-      :close-on-click-modal='false'
-
+      :close-on-click-modal="false"
     >
       <template>
         <addBlog @closeBlog="closeBlog()" @getBlogs="getBlogs()" />
@@ -83,12 +83,21 @@
 <script>
 // @ is an alias to /src
 import { Querier, hasKey, hasPassphrase } from "dbchain-js-client";
+import { jsonToSort } from "@/utils/mUtils.js";
+
 import addBlog from "./addblog.vue";
 let that;
 export default {
   name: "Home",
   data() {
     return {
+      search: {
+        row: 15,
+        page: 1,
+      },
+      dataLength: {
+        count: 15,
+      },
       List: [],
       isAddBlog: false,
     };
@@ -105,24 +114,53 @@ export default {
         this.$message.warning("登录失效，请重新登录");
         return this.$router.push("/login");
       }
-      let data = await Querier(this.appCode).blogs.val();
-      //console.log(data);
+
+      let dataLength = (this.dataLength = await Querier(this.appCode)
+        .table("blogs")
+        .count.val());
+      console.log(dataLength);
+
+      let data = await Querier(this.appCode)
+        .table("blogs")
+        .page(that.search.page, that.search.row)
+        .val();
+      console.log(that.search.page, that.search.row);
+      console.log(JSON.parse(JSON.stringify(data)));
       for (let i = 0; i < data.length; i++) {
         const element = data[i];
         let userInfo = await Querier(this.appCode)
-          .user.equal("dbchain_key", element.created_by)
+          .table("user")
+          .equal("dbchain_key", element.created_by)
           .val();
         userInfo.reverse();
-        //console.log(userInfo);
         data[i].userInfo = userInfo[0] ? userInfo[0] : {};
       }
-      data.reverse();
-      //console.log(data);
-      this.List = data;
+      console.log(data);
+      let list = jsonToSort([...data, ...this.List],'id', false);
+      console.log(list);
+      this.List = list;
     },
     closeBlog(val) {
       this.isAddBlog = false;
-      that.getBlogs()
+      that.getBlogs();
+    },
+    getData() {
+      console.log("xxxxxxxxxxxxxxxxxxx");
+      console.log(that.dataLength.count, that.search.row);
+      console.log(
+        Math.ceil(that.dataLength.count / that.search.row) > that.search.page
+      );
+      if (
+        Math.ceil(that.dataLength.count / that.search.row) <
+        that.search.page + 1
+      ) {
+        console.log("2xxxxx");
+        return that.$message.warning("暂无更多数据");
+      }
+
+      that.search.page = that.search.page + 1;
+      console.log(that.search.page);
+      this.getBlogs();
     },
   },
 
@@ -139,7 +177,8 @@ export default {
 <style scoped lang='scss'>
 ._blog_list {
   width: 1360px;
-  margin: 0 auto;min-height: 92vh;
+  margin: 0 auto;
+  min-height: 92vh;
   ._header {
     // padding-top: 25px;
     display: flex;
@@ -217,6 +256,9 @@ export default {
   ._content {
     display: flex;
     flex-wrap: wrap;
+    height: calc(100vh - 190px);
+    overflow: auto;
+
     ._block {
       text-align: left;
       border-bottom: 1px solid #f4f4f4;
@@ -229,8 +271,9 @@ export default {
       background: #ffffff;
       box-shadow: 0px 10px 9px 0px rgba(230, 230, 230, 0.26);
       border-radius: 16px;
-      margin-bottom: 22px;margin-right: 32px;
-      &:nth-child(3n+3){
+      margin-bottom: 22px;
+      margin-right: 32px;
+      &:nth-child(3n + 3) {
         margin-right: 0px;
       }
       ._tit {

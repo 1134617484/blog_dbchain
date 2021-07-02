@@ -72,7 +72,7 @@ export default {
     async getuserInfo() {
       let key = getAddress();
       //console.log(key);
-      let userinf = await Querier(this.appCode).user.equal("dbchain_key", key).val();
+      let userinf = await Querier(this.appCode).table('user').equal("dbchain_key", key).val();
       userinf.reverse();
       //console.log(userinf);
       this.form=userinf[0]?userinf[0]:this.form;

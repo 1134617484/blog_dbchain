@@ -156,6 +156,8 @@ export default {
       // 访回值如下 {status:false,content:'当前访参无法访问，请检查'}
       // 若不可设置，则应检查您提供的参数是否正确或网络是否存在问题
       // 此函数如非异步调用，则会返回promise，请检查需要异步调用时则需异步，否则使用中容易出错
+      console.log(this)
+      console.log(this.$APIURL)
       let isToBaseUrl = await detectChain(
         this.$APIURL.BaseUrl,
         this.$APIURL.ChainId

@@ -49,6 +49,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   background: #f8f8f8;
+  overflow-y: clip;
 }
 body {
   padding: 0;

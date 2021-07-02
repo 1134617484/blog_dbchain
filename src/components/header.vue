@@ -6,7 +6,8 @@
     <div class="_right"  v-if="!islogin">
       <span class="_name" @click="openCard()">{{ name }}</span>
       <div class="_img" @click="openCard()"> 
-        <img :src="getUserImg()" alt="" srcset="" />
+        <img :src="getUserImg()" alt="" srcset="" 
+        v-real-img="$APIURL.BaseUrl + '/ipfs/' + photo" :default-img="$img.default_img"/>
       </div>
 
       <div class="_card" v-show="showUserCard">
@@ -39,7 +40,9 @@
 
         <div class="_card_cont">
           <div class="_card_userImg" @click.stop="openUploadFile">
-            <img :src="getUserImg()" alt="" srcset="" />
+            <img :src="getUserImg()" alt="" srcset="" 
+            v-real-img="$APIURL.BaseUrl + '/ipfs/' + photo" :default-img="$img.default_img"
+           />
           </div>
           <input
             ref="uploadFile"
