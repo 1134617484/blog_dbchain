@@ -17,9 +17,9 @@
     </div>
     <div class="_search">
       <div class="group2 flex-row">
-        <span class="_active _text">POPULAR</span>
-        <span class="_text">最新</span>
-        <span class="_text">评价最多</span>
+        <span class="_active _text" @click="$router.replace('/refresh')">POPULAR</span>
+        <span class="_text" @click="$router.replace('/refresh')">最新</span>
+        <span class="_text" @click="$router.replace('/refresh')">评价最多</span>
         <div class="layer1 flex-col"><div class="block1 flex-col"></div></div>
       </div>
       <div class="_right">
@@ -31,7 +31,7 @@
         </span>
       </div>
     </div>
-    <div class="_content _hideScrollbar" v-loadmore="getData">
+    <div class="_content _hideScrollbar">
       <div
         class="_block"
         v-for="(item, index) in List"
@@ -74,7 +74,7 @@
       :close-on-click-modal="false"
     >
       <template>
-        <addBlog @closeBlog="closeBlog()" @getBlogs="getBlogs()" />
+        <addBlog @closeBlog="closeBlog()" @getBlogs="reloadList()" />
       </template>
     </el-dialog>
   </div>
@@ -91,13 +91,6 @@ export default {
   name: "Home",
   data() {
     return {
-      search: {
-        row: 15,
-        page: 1,
-      },
-      dataLength: {
-        count: 15,
-      },
       List: [],
       isAddBlog: false,
     };
@@ -115,18 +108,9 @@ export default {
         return this.$router.push("/login");
       }
 
-      let dataLength = (this.dataLength = await Querier(this.appCode)
-        .table("blogs")
-        .count.val());
-      console.log(dataLength);
-
       let data = await Querier(this.appCode)
-        .table("blogs")
-        .page(that.search.page, that.search.row)
-        .val();
-      console.log(that.search.page, that.search.row);
-      console.log(JSON.parse(JSON.stringify(data)));
-      for (let i = 0; i < data.length; i++) {
+        .table("blogs").val();
+     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         let userInfo = await Querier(this.appCode)
           .table("user")
@@ -140,27 +124,15 @@ export default {
       console.log(list);
       this.List = list;
     },
+    reloadList(){
+  this.isAddBlog = false;
+ this.$router.replace('/refresh')
+    },
     closeBlog(val) {
       this.isAddBlog = false;
-      that.getBlogs();
     },
     getData() {
-      console.log("xxxxxxxxxxxxxxxxxxx");
-      console.log(that.dataLength.count, that.search.row);
-      console.log(
-        Math.ceil(that.dataLength.count / that.search.row) > that.search.page
-      );
-      if (
-        Math.ceil(that.dataLength.count / that.search.row) <
-        that.search.page + 1
-      ) {
-        console.log("2xxxxx");
-        return that.$message.warning("暂无更多数据");
-      }
 
-      that.search.page = that.search.page + 1;
-      console.log(that.search.page);
-      this.getBlogs();
     },
   },
 

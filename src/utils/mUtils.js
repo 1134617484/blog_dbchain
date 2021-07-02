@@ -25,8 +25,8 @@ export const getQueryString = (name) => {
  export const jsonToSort = (json, key, type = true) => {
   function handler(key) {
     return function (a, b) {
-      var c = a[key]; //arr[key] 可以直接写入变量，而用点操作符不行
-      var d = b[key];
+      var c = isNaN(a[key])?a[key]:Number(a[key]); //arr[key] 可以直接写入变量，而用点操作符不行
+      var d = isNaN(b[key])?b[key]:Number(b[key]);
       if (c > d) {
         return type?1:-1;
       } else {

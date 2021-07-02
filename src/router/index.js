@@ -38,6 +38,13 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "blogInfo" */ "../views/blogInfo.vue"),
   },
+  {
+    name: "refresh",
+    path: `/refresh`,
+    component: () => import('@/views/errPage/refresh') 
+    // 目录更改为你自己的refresh.vue的目录
+  }
+
   
 ];
 

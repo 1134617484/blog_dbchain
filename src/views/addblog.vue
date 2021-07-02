@@ -78,7 +78,7 @@ export default {
       insertRow(that.appCode, tableName, row, async () => {
             that.$store.commit("setIsLoding", false);
             that.$message.success(text);
-            that.closeBlog()
+            this.$emit('getBlogs',false)
       });
     },
 
